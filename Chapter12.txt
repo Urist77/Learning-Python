@@ -1,0 +1,458 @@
+For Chapter 12, you may either use repl.it OR you may install Numpy and MatPlotLib using Pycharm. Either will work!
+
+If you want to use Pycharm, first create a project. Then, install the additional packages by using the following steps. It is important that you use these steps rather than try to install using the directions in zyBooks.
+
+File -> Settings -> Project (expand) -> Python Interpreter -> Install (+ symbol) -> type Numpy in the search bar, make sure it is selected in the line and click Install Package. Wait until you see the green bar indicating success.
+
+Then, type MatPlotLib in the search bar, make sure it is selected in the line and click Install Package. Wait until you see the green bar indicating success.
+
+Move both dd_stats.csv and ocean_temps.csv into your project folder.
+
+ 
+********************
+
+# 12.1.2: A program to plot ocean temperatures read from a file.
+# If you are using repl.it, you need to include the following two lines.
+# import os    # Use your own username/replName in the next line
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+  with open('ocean_temps.csv') as temp_file:
+      temps = []
+      for t in temp_file:
+          temps.append(float(t))
+
+  years = range(1850, 2012)
+
+  plt.plot(years, temps)
+  plt.show()
+
+main()
+
+********************
+
+# 12.1.3: Plotting multiple lines in the same graph.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+  with open('ocean_temps.csv') as temp_file:
+      temps = []
+      for t in temp_file:
+          temps.append(float(t))
+
+  temp_years = range(1850, 2012)
+  plt.plot(temp_years, temps)
+
+  pirate_years = range(1850, 2025, 25)
+  num_pirates_thousands = [20, 17, 15, 5, 0.4, 0.05, 0.025]
+  plt.plot(pirate_years, num_pirates_thousands)
+  plt.show()
+
+main()
+
+********************
+
+# 12.2.1: Format string 'r--' sets line color to red and line style to dashed.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+  with open('ocean_temps.csv') as temp_file:
+      temps = []
+      for t in temp_file:
+          temps.append(float(t))
+
+  years = range(1850, 2012)
+
+  plt.plot(years, temps, 'r--')
+  plt.show()
+
+main()
+
+
+********************
+
+# 12.2.2: Use keyword args to change line properties.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+    pirate_years = range(1850, 2025, 25)
+    number_of_pirates_thousands = [20, 17, 15, 5, 0.4, 0.05, 0.025]
+    plt.plot(pirate_years, number_of_pirates_thousands, 'ro-',
+             linewidth=5, markersize=5, alpha=0.35)
+    plt.show()
+
+main()
+
+
+********************
+
+# 12.2.3: Adding a legend to a plot.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+    with open('ocean_temps.csv') as temp_file:
+        temps = []
+        for t in temp_file:
+            temps.append(float(t))
+
+    temp_years = range(1850, 2012)
+    plt.plot(temp_years, temps, label="Ocean temperature change")
+
+    p_years = range(1850, 2025, 25)
+    pirates_thousands = [20, 17, 15, 5, 0.4, 0.05, 0.025]
+    plt.plot(p_years, pirates_thousands, label="Number of pirates")
+    plt.legend(shadow=True, loc="upper right")
+    plt.show()
+
+main()
+
+********************
+
+# 12.3.1: Adding text to a plot
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+    with open('dd_stats.csv') as f:
+        total_fatalities = []
+        alcohol_fatalities = []
+        for line in f:
+            total, alcohol = line.split(',')
+            total_fatalities.append(int(total))
+            alcohol_fatalities.append(int(alcohol))
+
+    years = range(1970, 2012)
+    plt.plot(years, total_fatalities, label="Total")
+    plt.plot(years, alcohol_fatalities, label="Alcohol-related")
+
+    plt.xlabel('Year')
+    plt.ylabel('Number of highway fatalities')
+    plt.legend(shadow=True, loc="upper right")
+
+    # Add plot title
+    plt.title("Alcohol related fatalities on highways")
+
+    # Add text giving x,y coordinates of the plot
+    plt.text(1970.5, 11000, 'Fatalities spike\n in 1970s', color='grey', fontsize=12)
+
+    # Add a vertical line at x-coordinate 1980
+    plt.axvline(1980, color='grey')
+
+    plt.show()
+
+main()
+
+
+********************
+
+# 12.3.2: Annotating a specific data point.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+    with open('dd_stats.csv') as f:
+        total_fatalities = []
+        alcohol_fatalities = []
+        for line in f:
+            total, alcohol = line.split(',')
+            total_fatalities.append(int(total))
+            alcohol_fatalities.append(int(alcohol))
+
+    years = range(1970, 2012)
+    plt.plot(years, total_fatalities, label="Total")
+    plt.plot(years, alcohol_fatalities, label="Alcohol-related")
+
+    plt.xlabel('Year')
+    plt.ylabel('Number of highway fatalities')
+    plt.legend(shadow=True, loc="upper right")
+
+    # Add plot title
+    plt.title("Alcohol related fatalities on highways")
+
+    # Add text giving x,y coordinates of the plot
+    plt.text(1970.5, 11000, 'Fatalities spike\n in 1970s', color='grey', fontsize=12)
+
+    # Add a vertical line at x-coordinate 1980
+    plt.axvline(1980, color='grey')
+
+    # Add annotation
+    arrow_properties = {
+        'facecolor': 'black',
+        'shrink': 0.1,
+        'headlength': 10,
+        'width': 2
+    }
+
+    plt.annotate('Drinking age changed to 21',
+                 xy=(1984, 24762),
+                 xytext=(1986, 30000),
+                 arrowprops=arrow_properties)
+
+    plt.show()
+    
+main()
+
+
+********************
+
+# 12.4.1: Creating arrays.
+import numpy as np
+
+def main():
+    # 1-dimension array
+    my_array1 = np.array([15.5, 25.11, 19.0])
+    print('my_array_1:')
+    print(my_array1)
+    print()
+
+    # 2-dimension array
+    my_array2 = np.array([(34, 25), (16, 12)])
+    print('my_array_2:')
+    print(my_array2)
+
+main()
+
+
+********************
+
+# 12.4.2: Pre-initialized arrays.
+import numpy as np
+
+def main():
+    zero_array = np.zeros((1, 5))  # 1-dimension array with 5 elements
+    print('zero_array:')
+    print(zero_array)
+    print()
+
+    one_array = np.ones((5, 2))  # 2-dimension array with 5 rows and 2 elements per row (2 columns)
+    print('one_array:')
+    print(one_array)
+
+main()
+
+
+********************
+
+# 12.4.3: Creating sequences using linspace().
+import numpy as np
+
+def main():
+    print(np.linspace(0, 1, 11))
+    print()
+    print(np.linspace(0, np.sin(np.pi / 4), 20))
+
+main()
+
+********************
+
+# 12.4.4: Array operations program.
+import numpy as np
+
+def main():
+    array1 = np.array([10, 20, 30, 40])
+    array2 = np.array([1, 2, 3, 4])
+
+    # Some common array operations
+
+    print('Adding arrays (array1 + array2)')
+    print(array1 + array2)
+
+    print('\nSubtracting arrays (array1 - array2)')
+    print(array1 - array2)
+
+    print('\nMultiplying arrays (array1 * array2)')
+    print(array1 * array2)
+
+    print('\nMatrix multiply (dot(array1 * array2))')
+    print(np.dot(array1, array2))
+
+    print('\nFinding square root of each element in array1')
+    print(np.sqrt(array1))
+
+    print('\nFinding minimum element in array1')
+    print(array1.min())
+
+    print('\nFinding maximum element in array1')
+    print(array1.max())
+
+main()
+
+********************
+
+# 12.5.1: Two types of data on the same plot.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import numpy as np
+import matplotlib.pyplot as plt
+
+def main():
+    # Wave parameters
+    FREQUENCY = 3
+    SAMPLING_RATE = 100
+    TIME_STEP = 1.0 / SAMPLING_RATE
+
+    # Like range() for floating point
+    t1 = np.arange(0.0, 5.0, TIME_STEP)
+
+    # Compute a sine wave
+    wave = np.sin(FREQUENCY * 2 * np.pi * t1)
+
+    # Compute Fast Fourier Transform (FFT)
+    fft_result = np.fft.fft(wave)
+
+    # Compute x-axis values for frequency domain
+    t2 = np.fft.fftfreq(len(t1), TIME_STEP)
+
+    plt.plot(t1, wave)
+    plt.plot(t2, np.abs(fft_result))
+    plt.show()
+
+main()
+
+********************
+
+# 12.5.2: Using multiple figures.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import numpy as np
+import matplotlib.pyplot as plt
+
+def main():
+    # Unique identifiers for each figure
+    FIGURE1 = 1
+    FIGURE2 = 2
+
+    # Wave parameters
+    FREQUENCY = 3
+    SAMPLING_RATE = 100
+    TIME_STEP = 1.0 / SAMPLING_RATE
+
+    # Like range() for floating point
+    t1 = np.arange(0.0, 5.0, TIME_STEP)
+
+    # Compute a sine wave
+    wave = np.sin(FREQUENCY * 2 * np.pi * t1)
+
+    # Compute Fast Fourier Transform (FFT)
+    fft_result = np.fft.fft(wave)
+
+    # Compute x-axis values for frequency domain
+    t2 = np.fft.fftfreq(len(t1), TIME_STEP)
+
+    plt.figure(FIGURE1)
+    plt.plot(t1, wave)
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Amplitude")
+    plt.axis([-1, 6, -1.2, 1.2])  # Empty space buffer
+
+    plt.figure(FIGURE2)
+    plt.plot(t2, np.abs(fft_result))
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Magnitude")
+
+    # Set plot axis ranges [min_x, max_x, min_y, max_y]
+    plt.axis([-5, 5, 0, 260])
+
+    plt.show()
+
+main()
+
+
+********************
+
+# 12.5.3: Using subplots.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import numpy as np
+import matplotlib.pyplot as plt
+
+def main():
+    # Unique identifiers for each figure
+    FIGURE1 = 1
+    FIGURE2 = 2
+
+    # Wave parameters
+    FREQUENCY = 3
+    SAMPLING_RATE = 100
+    TIME_STEP = 1.0 / SAMPLING_RATE
+
+    # Like range() for floating point
+    t1 = np.arange(0.0, 5.0, TIME_STEP)
+
+    # Compute a sine wave
+    wave = np.sin(FREQUENCY * 2 * np.pi * t1)
+
+    # Compute Fast Fourier Transform (FFT)
+    fft_result = np.fft.fft(wave)
+
+    # Compute x-axis values for frequency domain
+    t2 = np.fft.fftfreq(len(t1), TIME_STEP)
+
+    plt.subplot(2, 1, 1)  # 2 rows, 1 column. Use loc 1
+    plt.plot(t1, wave)
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Amplitude")
+    plt.axis([-1, 6, -1.2, 1.2])  # Empty space buffer
+
+    plt.subplot(2, 1, 2)  # 2 rows, 1 column. Use loc 2
+    plt.plot(t2, np.abs(fft_result))
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Magnitude")
+
+    # Set plot axis ranges [min_x, max_x, min_y, max_y]
+    plt.axis([-5, 5, 0, 260])
+
+    plt.show()
+    
+main()
+
+
+********************
+
+# 12.5.4: Adding a second y-axis on the right side of a plot.
+# import os
+# os.environ['MPLCONFIGDIR'] = "jluscomb/Chapter12"
+import matplotlib.pyplot as plt
+
+def main():
+    with open('dd_stats.csv') as f:
+        total_fatalities = []
+        alcohol_fatalities = []
+        percentages = []
+        for line in f:
+            total, alcohol = line.split(',')
+            total_fatalities.append(int(total))
+            alcohol_fatalities.append(int(alcohol))
+            percentages.append(float(alcohol) / float(total) * 100)
+
+    years = range(1970, 2012)
+
+    figure = plt.figure()
+    left_axis = figure.add_subplot(1, 1, 1)
+    right_axis = left_axis.twinx()
+
+    left_axis.plot(years, total_fatalities, label="Total")
+    left_axis.plot(years, alcohol_fatalities, label="Alcohol-related")
+    right_axis.plot(years, percentages, 'r--', label="% alcohol-related")
+    right_axis.axis([1970, 2012, 0, 100])
+
+    left_axis.set_xlabel('Year')
+    left_axis.set_ylabel('Number of highway fatalities')
+    left_axis.legend(loc="upper left")
+    right_axis.set_ylabel('% fatalities involving alcohol')
+    right_axis.legend(loc="upper right")
+
+    plt.show()
+
+main()
