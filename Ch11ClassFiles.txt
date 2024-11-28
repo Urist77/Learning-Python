@@ -1,0 +1,97 @@
+# zyDE 11.3.1: Iterating over a dictionary example: Gradebook statistics.
+# Print the name and grade percentage of the student with the highest total of points.
+# Find the average score of each assignment.
+# Find and apply a curve to each student's total score, such that the best student has 100% of the total points.
+# student_grades contains scores (out of 100) for 5 assignments
+
+def printGradeBook(gradesDict):
+    print(f"{'Name':15s} {'Asgn1':5s} {'Asgn2':5s} {'Asgn3':5s} "
+          f"{'Asgn4':5s} {'Asgn5':5s} {'Curve':5s}")
+
+
+
+
+
+
+def applyCurve(gradesDict, curve):
+    # Find and apply a curve to each student's total score, such that the best student has 100% of the total points.
+    print('\n')
+
+
+
+
+    print(f'\nThis is the updated dictionary: \n {gradesDict}')
+
+def asgnAverage(gradesDict):
+    # Find the average score of each assignment.
+    totAsgn = [0, 0, 0, 0, 0]
+
+
+
+
+    for i in range(len(totAsgn)):
+        print(f'Average for assignment #{i + 1:d}: {totAsgn[i] / len(gradesDict):.1f}')
+    return
+
+def highestPercent(gradesDict):
+    # Locate student with highest percent average across all assignments. Also return curve.
+    totPoints = 0
+    percentage = 0.0
+    topScoreName = ''
+
+
+
+
+    print(f'\n{topScoreName} had the highest score with an average of: {percentage:.1f}%\n')
+    curve = (100 - percentage) * 5  # The curve needs to be multiplied by 5 for total of 5 tests
+    return round(curve,1)   # changed from video
+
+def main():
+    student_grades = {
+        'Andrew': [56, 79, 90, 22, 50],
+        'Nisreen': [88, 62, 68, 75, 78],
+        'Alan': [95, 88, 92, 85, 85],
+        'Chang': [76, 88, 85, 82, 90],
+        'Tricia': [99, 92, 95, 89, 99]
+    }
+    print(f'This is the dictionary: \n {student_grades}')
+    # asgnAverage(student_grades)  # changed order
+    # curve = highestPercent(student_grades)
+    # applyCurve(student_grades, curve)
+    # printGradeBook(student_grades)
+
+main()
+
+
+
+**********
+
+# zyDE 11.1.1a: Dictionary example: Gradebook.
+
+def main():
+    student_grades = {}  # Create an empty dict
+    grade_prompt = "Enter name and grade (Ex. 'Bob A+'):"
+    menu_prompt = ("1. Add/modify student grade\n"
+                    "2. Delete student grade\n"
+                    "3. Print student grades\n"
+                    "4. Quit\n")
+
+    while True:  # Exit when user selects 4 to quit
+        command = input(menu_prompt).lower().strip()  # what is not needed on this line?
+        if command == '1':
+            name, grade = input(grade_prompt).split() # what is missing here?
+            # student_grades[name] = grade
+        elif command == '2':
+            pass
+            # name = input("Delete which student's grade? ").strip().title()
+            # del student_grades[name]
+        elif command == '3':
+            pass
+            # print(student_grades)
+        elif command == '4':
+            break
+        else:
+            print('Unrecognized command.')
+
+main()
+
